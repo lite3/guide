@@ -1,0 +1,118 @@
+<guide id="useSkill" hasMasker="true" name="使用技能">
+	<prevStepList>
+		<stepStep>
+			<promptlyHandler><![CDATA[{scene}.end2(setHero,checkWave)]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="checkWave">
+			<promptlyHandler><![CDATA[{if}('{scene}.geqWave(2)','{goto}(checkPosStatus)','{helper}.finishCurrGuide()')]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="checkPosStatus">
+			<promptlyHandler><![CDATA[{switch}({pve}.posStatus('6_9'),1,'{goto}(pointSpace)',2,'{goto}(pointTower)',3,'{goto}(pointFightBtn)')]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="pointSpace">
+			<dialogList>
+				<dialog x="138" y="58" avatar="130011">
+					<chat><![CDATA[未来的船长，<b>西格</b>的小喽啰很好对付，玛姬就能搞定！]]></chat>
+				</dialog>
+				<dialog x="138" y="58" avatar="120004" ignoreBg="true">
+					<chat><![CDATA[小船长，在塔防海贼王的世界里，需要先设置阵地。我是<font color='#00CCFF'>【水手】</font>职业，在这设置一个<font color='#FF0000'>水手阵地</font>吧！]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<promptlyHandler><![CDATA[{pve}.autoClose(false)]]></promptlyHandler>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{pve}.getPos('6_9')]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{pve}.scene]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep id="pointSeaman">
+			<dialogList>
+				<dialog x="138" y="58" avatar="120004" ignoreBg="true">
+					<chat><![CDATA[请选择<font color='#FF0000'>【水手阵地】</font>。]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{pve}.getJobPos('6_9',1)]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{pve}.scene]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep id="pointTower">
+			<dialogList>
+				<dialog x="138" y="58" avatar="120004" ignoreBg="true">
+					<chat><![CDATA[阵地和伙伴职业要<font color='#FF0000'>匹配</font>。请<font color='#FF0000'>【派驻】</font>我到阵地上吧。伙伴越强，输出伤害越大！]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<promptlyHandler><![CDATA[{pve}.autoClose(false)]]></promptlyHandler>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{pve}.getPos('6_9')]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{pve}.scene]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep id="pointHero">
+			<promptlyHandler><![CDATA[{if}('{module}.getModule(dispatchHeroPanel).data.length>0','','{goto}(pointFightBtn)')]]></promptlyHandler>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{module}.getView(dispatchHeroPanel).hero0]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{module}.getView(dispatchHeroPanel).hero0]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+			<addList>
+				<expr><![CDATA[{module}.showComplete(dispatchHeroPanel)]]></expr>
+			</addList>
+		</stepStep>
+		<stepStep id="pointFightBtn">
+			<dialogList>
+				<dialog x="138" y="58" avatar="120004" ignoreBg="true">
+					<chat><![CDATA[我准备好了，现在就<font color='#FF0000'>开始战斗</font>吧！]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<promptlyHandler><![CDATA[{pve}.autoClose(true)]]></promptlyHandler>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{mainUI}.fightBtn]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{mainUI}.fightBtn]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep id="finish">
+			<promptlyHandler><![CDATA[({updateGuide}(setHero),{helper}.finishCurrGuide())]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="finish">
+			<dialogList>
+				<dialog x="93" y="387">
+					<chat><![CDATA[船长，我可以攻击伤害单个敌人，对付这几个小毛贼用我就够了！]]></chat>
+					<clickHandler><![CDATA[{helper}.finishCurrGuide()]]></clickHandler>
+				</dialog>
+			</dialogList>
+		</stepStep>
+	</prevStepList>
+	<nextStepList>
+	</nextStepList>
+	<stepFinishList>
+		<stepFinish>
+			<type>noviceGuideHelper_TASK_COMPLETED</type>
+			<addList>
+				<expr><![CDATA[{event}.data=={helper}.currGuideId]]></expr>
+			</addList>
+		</stepFinish>
+	</stepFinishList>
+</guide>

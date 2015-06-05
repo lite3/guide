@@ -1,0 +1,86 @@
+<guide id="tax" hasMasker="true" name="第一次出村">
+	<prevStepList>
+		<stepStep>
+			<promptlyHandler><![CDATA[{scene}.end2(tax,checkWave)]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="checkWave">
+			<promptlyHandler><![CDATA[{if}('{scene}.geqWave(9)','{goto}(pointLueduoBtn)','{helper}.finishCurrGuide()')]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="pointLueduoBtn">
+			<dialogList>
+				<dialog x="170" y="333">
+					<chat><![CDATA[船长，贝里是战斗的最基本资源，无论是强化装备还是训练伙伴都会大量消耗贝里。]]></chat>
+				</dialog>
+				<dialog x="170" y="333" ignoreBg="true">
+					<chat><![CDATA[我们海贼团靠的就是掠夺无良坏蛋的财宝。请船长点击<font color='#ff0000'>【掠夺】</font>]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<knockout>1</knockout>
+			<actTips><![CDATA[{mainUI}.operateBar.lueduoBtn]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{mainUI}.operateBar.lueduoBtn]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep>
+			<promptlyHandler><![CDATA[{wait}(pointTaxBtn,'{module}.showComplete(TaxPanel)','{module}.dataComplete(TaxPanel)')]]></promptlyHandler>
+		</stepStep>
+		<stepStep id="pointTaxBtn">
+			<knockout>1</knockout>
+			<promptlyHandler><![CDATA[{if}('{module}.getView(TaxPanel).taxBtn.mouseEnabled','','{goto}(pointTaxForceBtn)')]]></promptlyHandler>
+			<actTips><![CDATA[{module}.getView(TaxPanel).taxBtn]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{module}.getView(TaxPanel).taxBtn]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+		</stepStep>
+		<stepStep id="pointTaxForceBtn">
+			<dialogList>
+				<dialog x="170" y="333">
+					<chat><![CDATA[船长，您的<font color='#00CCFF'>等级</font>越高能掠夺到的贝里也会越多，<font color='#00CCFF'>每天</font>都能进行<font color='#00CCFF'>10次</font>掠夺，千万不要忘记了]]></chat>
+				</dialog>
+				<dialog x="170" y="333" ignoreBg="true">
+					<chat><![CDATA[战斗中会掉落强夺令，可以用来进行强行掠夺，另外，每天<font color='#00CCFF'>第一次</font></b>强夺也都是<font color='#00CCFF'>免费</font>的。]]></chat>
+					<effectEndHandler><![CDATA[{showArrow}()]]></effectEndHandler>
+				</dialog>
+			</dialogList>
+			<knockout>1</knockout>
+			<promptlyHandler><![CDATA[{if}('{module}.getView(TaxPanel).taxForceBtn.mouseEnabled','','{goto}(finish)')]]></promptlyHandler>
+			<actTips><![CDATA[{module}.getView(TaxPanel).taxForceBtn]]></actTips>
+			<container><![CDATA[{stage}]]></container>
+			<toNextMouseList>
+				<mouseEvent>
+					<target><![CDATA[{module}.getView(TaxPanel).taxForceBtn]]></target>
+				</mouseEvent>
+			</toNextMouseList>
+			<addList>
+				<expr><![CDATA[{module}.showComplete(TaxPanel)]]></expr>
+				<expr><![CDATA[{module}.dataComplete(TaxPanel)]]></expr>
+			</addList>
+		</stepStep>
+		<stepStep id="finish">
+			<promptlyHandler><![CDATA[{updateGuide}(tax)]]></promptlyHandler>
+			<dialogList>
+				<dialog x="170" y="333">
+					<chat><![CDATA[剩下的就靠船长了！在掠夺进入<font color='#00CCFF'>10分钟</font>CD限制之前，就请船长狠狠地掠夺吧！]]></chat>
+					<clickHandler><![CDATA[{helper}.finishCurrGuide()]]></clickHandler>
+				</dialog>
+			</dialogList>
+		</stepStep>
+	</prevStepList>
+	<nextStepList>
+	</nextStepList>
+	<stepFinishList>
+		<stepFinish>
+			<type>noviceGuideHelper_TASK_COMPLETED</type>
+			<addList>
+				<expr><![CDATA[{event}.data=={helper}.currGuideId]]></expr>
+			</addList>
+		</stepFinish>
+	</stepFinishList>
+</guide>
